@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://d3hvupya4uawk"]
+
+[ext_resource type="Script" path="res://world.gd" id="1_u8lhl"]
+[ext_resource type="Texture2D" uid="uid://r2eyt7heh34h" path="res://icon.svg" id="2_uh7gi"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2w8pj"]
+noise_type = 0
+seed = 1
+frequency = 0.025
+fractal_octaves = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_r8lfc"]
+width = 1000
+height = 1000
+invert = true
+seamless_blend_skirt = 0.327
+noise = SubResource("FastNoiseLite_2w8pj")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ucxpe"]
+texture = ExtResource("2_uh7gi")
+4:2/0 = 0
+1:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_sxpin"]
+sources/0 = SubResource("TileSetAtlasSource_ucxpe")
+
+[node name="world" type="Node2D"]
+script = ExtResource("1_u8lhl")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-3.8147e-06, 1.49998)
+scale = Vector2(1, 1.00586)
+texture = SubResource("NoiseTexture2D_r8lfc")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_sxpin")
+format = 2
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
